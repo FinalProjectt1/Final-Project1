@@ -1,0 +1,24 @@
+{
+  "name": "final-project1",
+  "version": "1.0.0",
+  "description": "final project 1",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon app.js"
+    
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FinalProjectt1/Final-Project1.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/FinalProjectt1/Final-Project1/issues"
+  },
+  "homepage": "https://github.com/FinalProjectt1/Final-Project1#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "nodemon": "^2.0.20"
+  }
+}
