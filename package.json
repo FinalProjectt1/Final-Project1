@@ -5,7 +5,6 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon app.js"
-    
   },
   "repository": {
     "type": "git",
@@ -18,7 +17,15 @@
   },
   "homepage": "https://github.com/FinalProjectt1/Final-Project1#readme",
   "dependencies": {
-    "express": "^4.18.2",
-    "nodemon": "^2.0.20"
+    "bcrypt": "^5.0.1",
+    "body-parser": "^1.20.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "express-validator": "^6.14.2",
+    "jsend": "^1.1.0",
+    "jsonwebtoken": "^8.5.1",
+    "nodemon": "^2.0.20",
+    "pg": "^8.7.3"
   }
 }
