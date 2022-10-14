@@ -2,8 +2,6 @@ const { validationResult } = require("express-validator");
 const authService = require("../services/authService");
 
 exports.register = async (req, res, next) => {
-  
-
   // Validate payload
   const errors = validationResult(req.body);
 
@@ -19,7 +17,7 @@ exports.register = async (req, res, next) => {
 
   const registerResponse = await authService.register({
     email,
-    username, 
+    username,
     password,
   });
 
@@ -39,8 +37,6 @@ exports.register = async (req, res, next) => {
 };
 
 exports.login = async (req, res, next) => {
-  
-
   // Validate payload
   const errors = validationResult(req.body);
 
@@ -70,6 +66,15 @@ exports.login = async (req, res, next) => {
     code: 200,
     message: "User berhasil login",
     token: loginResponse.token,
+    error_validation: [],
+  });
+};
+
+exports.getLoggedUser = async (req, res, next) => {
+  return res.jsend.success({
+    code: 200,
+    message: "",
+    user: req.user,
     error_validation: [],
   });
 };

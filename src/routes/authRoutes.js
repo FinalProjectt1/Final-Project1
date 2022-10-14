@@ -1,8 +1,12 @@
 const { body } = require("express-validator");
 const express = require("express");
 const router = express.Router();
-const { register, login } = require("../controllers/authController");
-
+const { authenticate } = require("../middlewares/authentication");
+const {
+  register,
+  login,
+  getLoggedUser,
+} = require("../controllers/authController");
 
 router.post(
   "/register",
@@ -18,5 +22,7 @@ router.post(
   body("password").isLength({ min: 8 }),
   login
 );
+
+router.get("/me", authenticate, getLoggedUser);
 
 module.exports = router;
