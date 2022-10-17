@@ -11,14 +11,12 @@ const {
 router.post(
   "/register",
   body("email").isEmail(),
-  body("password").isLength({ min: 8 }),
   register
 );
 
 router.post(
   "/login",
   body("email").isEmail(),
-  body("password").isLength({ min: 8 }),
   login
 );
 
