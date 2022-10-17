@@ -1,5 +1,4 @@
 const usersRepository = require("../repositories/usesrRepository");
-const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { JWT_SECRET, JWT_EXPIRE } = process.env;
 
@@ -30,7 +29,7 @@ class AuthService {
       }
 
       //cek apakah password benar
-      const isMatch = await bcrypt.compare(password, getUser.password);
+      const isMatch = (password == getUser.password);
 
       if (!isMatch) {
         return {
@@ -63,7 +62,6 @@ class AuthService {
         token,
       };
     } catch (err) {
-      console.log(err)
       return {
         status: false,
         error: {
@@ -82,7 +80,7 @@ class AuthService {
         email,
       });
 
-      if (getUserByEmail) 
+      if (getUserByEmail)
         return {
           status: false,
           error: {
@@ -97,7 +95,7 @@ class AuthService {
             },
           ],
         };
-      
+
       // Insert user to database
       const { createdUser } = await usersRepository.create({
         email,
@@ -110,7 +108,6 @@ class AuthService {
         createdUser,
       };
     } catch (err) {
-      console.log(err);
       return {
         status: false,
         error: {
