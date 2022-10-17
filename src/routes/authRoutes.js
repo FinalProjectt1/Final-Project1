@@ -10,7 +10,6 @@ const {
 
 router.post(
   "/register",
-  body("username").isLength({ min: 5 }),
   body("email").isEmail(),
   body("password").isLength({ min: 8 }),
   register

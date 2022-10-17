@@ -13,11 +13,10 @@ exports.register = async (req, res, next) => {
     });
 
   //Panggil serivce
-  const { email, username, password } = req.body;
+  const { email, password } = req.body;
 
   const registerResponse = await authService.register({
     email,
-    username,
     password,
   });
 

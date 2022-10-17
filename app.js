@@ -17,7 +17,7 @@ app.use(jsend.middleware);
 app.use(cors());
 
 // Initialize Routes
-router.use("/auth", authRoutes);
+router.use("/user", authRoutes);
 
 app.use("/api", router);
 

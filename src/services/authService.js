@@ -3,7 +3,6 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { JWT_SECRET, JWT_EXPIRE } = process.env;
 
-const SALT_ROUND = 10;
 
 class AuthService {
   static async login({ email, password }) {
@@ -76,7 +75,7 @@ class AuthService {
     }
   }
 
-  static async register({ email, username, password }) {
+  static async register({ email, password }) {
     try {
       //cek keberadaan email -> butuh get user by email
       const { getUser: getUserByEmail } = await usersRepository.getByEmail({
@@ -99,34 +98,9 @@ class AuthService {
           ],
         };
       
-
-      //Cek keberadaan username
-      const { getUser: getUserByUsername } =
-        await usersRepository.getByUsername({ username });
-
-      if (getUserByUsername) 
-        return {
-          status: false,
-          error: {
-            code: 400,
-            message: "Username already registered",
-          },
-          error_validation: [
-            {
-              msg: "Invalid value",
-              param: "username",
-              location: "body",
-            },
-          ],
-        };
-
-      // Encrypt Password
-      password = await bcrypt.hash(password, SALT_ROUND);
-
       // Insert user to database
       const { createdUser } = await usersRepository.create({
         email,
-        username,
         password,
       });
 
