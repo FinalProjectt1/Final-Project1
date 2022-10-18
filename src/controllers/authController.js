@@ -14,11 +14,12 @@ exports.register = async (req, res, next) => {
 
   //Panggil serivce
   const { email, password } = req.body;
-
+  
   const registerResponse = await authService.register({
     email,
     password,
   });
+  console.log(registerResponse)
 
   if (!registerResponse.status)
     return res.status(registerResponse.error.code).jsend.fail({
