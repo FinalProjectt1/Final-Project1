@@ -39,21 +39,21 @@ class ReflectionController {
             const authenticatedUserId = res.dataUser.id;
             const { success, low_point, take_away } = req.body;
 
-            //query
-            const dataUser = await postgres.query(`SELECT * FROM reflections WHERE owner_id=${+authenticatedUserId}`);
+            // //query
+            // const dataUser = await postgres.query(`SELECT * FROM reflections WHERE owner_id=${+authenticatedUserId}`);
 
-            //check id in params it is right or wrong
-            for (var i = 0; i < dataUser.rowCount; i++) {
-                if (dataUser.rows[i].id == id) {
-                    const dataUpdate = await postgres.query(`UPDATE reflections SET success=$1, low_point=$2, take_away=$3, owner_id=$4, modified_date=$5 WHERE id=$6 RETURNING *`, [success, low_point, take_away, authenticatedUserId, new Date(), id]);
+            // //check id in params it is right or wrong
 
-                    return res.status(201).json({
-                        message: 'Success update reflection',
-                        data: dataUpdate.rows
-                    });
-                }
+            const dataUpdate = await postgres.query(`UPDATE reflections SET success=$1, low_point=$2, take_away=$3, owner_id=$4, modified_date=$5 WHERE id=$6 RETURNING *`, [success, low_point, take_away, authenticatedUserId, new Date(), id]);
+
+            if (dataUpdate.rowCount > 0) {
+                return res.status(201).json({
+                    message: 'Success update reflection',
+                    data: dataUpdate.rows
+                });
             }
-            return res.status(500).json({ message: 'This reflection id not found on params' })
+
+            // return res.status(500).json({ message: 'This reflection id not found on params' })
         } catch (error) {
             return res.status(500).json(error);
         }
@@ -62,17 +62,15 @@ class ReflectionController {
     static async deleteReflection(req, res) {
         try {
             const id = parseInt(req.params.id);
-            const authenticatedUserId = parseInt(res.dataUser.id);
-            const dataUser = await postgres.query(`SELECT * FROM reflections WHERE owner_id=${+authenticatedUserId}`);
-            for (var i = 0; i < dataUser.rowCount; i++) {
-                if (dataUser.rows[i].id == id) {
-                    const dataDelete = await postgres.query(`DELETE FROM reflections WHERE id=$1 RETURNING *`, [id]);
-                    return res.status(201).json({
-                        message: 'Success delete reflection',
-                        data: dataDelete.rows
-                    });
-                }
+
+            const dataDelete = await postgres.query(`DELETE FROM reflections WHERE id=$1 RETURNING *`, [id]);
+            if (dataDelete.rowCount > 0) {
+                return res.status(201).json({
+                    message: 'Success delete reflection',
+                    data: dataDelete.rows
+                });
             }
+
             return res.status(500).json({ message: 'This reflection id not found on params' });
         } catch (error) {
             return res.status(500).json(error);
